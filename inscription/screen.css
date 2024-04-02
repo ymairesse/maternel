@@ -1,0 +1,73 @@
+body {
+    margin: auto;
+    padding: 0 0 2em;
+    background-repeat: repeat;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 10pt;
+}
+
+.intro {
+    font-size: 12pt;
+}
+
+tr.selected {
+    background-color: #fcc !important;   
+}
+
+a:hover {
+    color: red;
+    text-decoration: underline;
+}
+
+a:active {
+    color: #ff0066;
+}
+
+form {
+    border: 1px dashed Red;
+    padding: 15px;
+}
+
+input[type='text'], input[type='passwd'], select, textarea {
+    background: #eeeeee repeat scroll 0% 50%;
+    color: #111111;
+}
+
+#footer {
+    margin: 0 auto;
+    padding: 0 2em;
+    width: 1000px;
+    font-size: 10px;
+    font-weight: normal;
+    bottom: 0;
+    position: fixed;
+    background-color: #ffe37f;
+}
+
+
+label.error {
+    margin: 0 1em;
+    padding: 0 1em;
+    background-color: red;
+    font-size:10px;
+    color: white;
+}
+
+#tableauAdmin tr {
+    cursor:pointer;
+}
+
+tbody tr.cible td {
+    border-top: 2px solid #f00;
+    border-bottom: 2px solid #f00;
+}
+
+.popover-title {
+    background-color: #FAAF3A;
+    color: #444;
+    font-size: 15px;
+}
+
+p.info {
+    color: blue;
+}

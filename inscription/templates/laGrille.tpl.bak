@@ -1,0 +1,119 @@
+<ul class="nav nav-tabs" id="myTab" role="tablist" style="width:100%">
+    {foreach from=$listeActivites key=$idActivite item=dataActivite name=activites}
+        <li class="nav-item{if $smarty.foreach.activites.index == 0} active{/if}">
+            <a class="nav-link"
+                id="tab{$idActivite}"
+                data-idactivite="{$idActivite}"
+                data-toggle="tab"
+                href="#activite_{$idActivite}"
+                role="tab"
+                aria-controls="activite_{$idActivite}"
+                aria-selected="{if $smarty.foreach.activites.index == 0}true{else}false{/if}">
+            {$listeActivites.$idActivite.titre}
+            </a>
+        </li>
+    {/foreach}
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    {foreach from=$listeActivites key=$idActivite item=dataActivite name=activites}
+        <div class="tab-pane {if $smarty.foreach.activites.index == 0}active{/if}"
+            id="activite_{$idActivite}"
+            role="tabpanel"
+            aria-labelledby="tab{$idActivite}">
+
+                <div class="col-md-8 col-sm-8">
+                    <h3>{$listeActivites.$idActivite.titre}
+                        <a class="btn btn-primary btn-xs pull-right btn-print"
+                            href="index.php?action=print&amp;idActivite={$idActivite}" target="_blank">
+                            Impression
+                        </a>
+                    </h3>
+                    <div style="clear:both;height: 35em; overflow: auto;">
+
+                        <table class="table table-condensed table-responsive">
+                            <thead>
+                                <tr>
+                                    <th style="2em">n</th>
+                                    <th style="25em">Nom</th>
+                                    <th style="text-align:center">Section</th>
+                                    <th style="width:5em">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            {foreach from=$listeSections key=idSection item=section}
+                                {assign var=maxLignes value=$listeMax.$idActivite.$idSection}
+                                {assign var=n value=0}
+                                {while $n < $maxLignes}
+                                    <tr class="section{$idSection}">
+                                        <td>{$n+1}</td>
+                                        <td>
+                                            {assign var=ligne value=$inscriptions.$idActivite.$idSection.$n}
+                                            {if $ligne != Null}
+                                                {if ($ligne.mail == $dataUser.mail) || ($dataUser.statut == 'admin')}
+                                                    {$ligne.prenom} {$ligne.nom}
+                                                {else}
+                                                La place est prise
+                                                {/if}
+                                                {else}
+                                                &nbsp;
+                                            {/if}
+                                        </td>
+                                        <td style="text-align:center">
+                                            {$listeSections[$idSection]|default:'&nbsp;'}
+                                        </td>
+                                        <td>
+                                            {if ($ligne == Null) && ($idSection == $dataUser.idSection)}
+                                            <button
+                                                type="button"
+                                                data-idactivite="{$idActivite}"
+                                                data-mail="{$dataUser.mail}"
+                                                data-passwd="{$dataUser.passwd}"
+                                                class="btn btn-primary btn-sm pull-right inscription">Je m'inscris</button>
+                                            {else}
+                                                &nbsp;
+                                            {/if}
+                                            {if $ligne != Null && $ligne['mail'] == $dataUser.mail}
+                                            <button type="button"
+                                                data-idactivite="{$idActivite}"
+                                                data-mail="{$dataUser.mail}"
+                                                data-passwd="{$dataUser.passwd}"
+                                                class="btn btn-danger btn-sm pull-right delete">Je veux annuler</button>
+                                            {/if}
+                                        </td>
+                                    </tr>
+                                    {assign var=n value=$n+1}
+                                {/while}
+                            {/foreach}
+                        </table>
+
+                    </div>
+                    <p>Légende des couleurs :
+                        {foreach from=$listeSections key=idSection item=section}
+                        <span class="section{$idSection}">Section {$section}</span>
+                        {/foreach}
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-sm-4" style="height: 40em; overflow:auto;">
+                    {if $dataUser.idActivite != Null}
+                    <div class="important">
+                        <h4>Votre inscription</h4>
+                        {assign var=id value=$dataUser.idActivite}
+                        <p>Activité: {$listeActivites.$id.titre}</p>
+                    </div>
+                    {/if}
+
+                    <h4>Description des activités</h4>
+                    <p><strong style="color:red;">{$listeActivites.$idActivite.menu|@count} activité(s) sur la journée.</strong></p>
+                    {foreach from=$listeActivites.$idActivite.menu key=wtf item=data name=boucle}
+                        <h2>Activité {$smarty.foreach.boucle.iteration}</h2>
+                        {$descriptionsActivites.$data.texte}
+                        <hr>
+                    {/foreach}
+                </div>
+
+        </div>
+    {/foreach}
+
+</div>

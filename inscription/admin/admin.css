@@ -1,0 +1,35 @@
+.sansReponse {
+    background: #ffe566 !important;
+}
+
+.annule {
+    background: #ff9a9a !important;
+}
+
+.rvInscription {
+    background-color: #9797dd !important;
+}
+
+.inscription {
+    background-color: #8e8 !important;
+}
+
+.mailEnvoye {
+    background-color: #ffc0cb !important;
+}
+
+.invitationEnvoyee {
+    background-color: lightblue !important;
+}
+
+.annule a, .rvInscription a, .sansReponse a, .inscription a {
+    color: black;
+}
+
+.insert {
+    background-color: #33f;
+    color: yellow;
+    padding: 0 0.5em;
+    margin: 0.2em 0.5em;
+
+}
